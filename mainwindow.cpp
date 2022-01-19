@@ -1,8 +1,12 @@
+#include <iostream>
+#include <QStyle>
+
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include <iostream>
-#include <QStyle>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -34,14 +38,16 @@ void MainWindow::setupToolBar()
 
     connect(loadButton, &QAction::triggered, this, [this]() {
         QString fileName = QFileDialog::getOpenFileName(this, "Image to be processed", QString(), "Image Files (*.png *.jpg *.bmp)");
-
         if(!fileName.isEmpty()) {
-            QImage imageDisplay(fileName);
+            cv::Mat img = cv::imread(fileName.toLocal8Bit().constData());
+
+
+            QImage imageDisplay((const unsigned char*)(img.data),img.cols,img.rows,QImage::Format_RGB888);
+
             QSize newImageSize = imageDisplay.size();
             ui->imageLabel->resize(newImageSize);
             ui->imageLabel->setPixmap(QPixmap::fromImage(imageDisplay));
             ui->imageLabel->setAttribute(Qt::WA_Hover, true);
-
 
             connect(ui->imageLabel,&ImageDisplay::mouseMoved,this , [this](const QPoint& mousePos) {
                 QString text("x=%1;y=%2");
