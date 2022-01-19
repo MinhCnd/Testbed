@@ -26,7 +26,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-find_package(OpenCV COMPONENTS core)
+find_package(OpenCV COMPONENTS core imgcodecs)
 
 if(ANDROID)
   add_library(Testbed SHARED
