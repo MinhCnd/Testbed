@@ -45,6 +45,9 @@ else()
     imagedisplay.cpp
     imagedisplay.h
 
+    cvmatandqimage.cpp
+    cvmatandqimage.h
+
     resources.qrc
   )
 endif()
