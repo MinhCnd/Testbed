@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , positionLabel(this)
+    , imageSizeLabel(this)
 {
     ui->setupUi(this);
 
@@ -49,6 +50,9 @@ void MainWindow::setupToolBar()
             ui->imageLabel->setPixmap(QPixmap::fromImage(imageDisplay));
             ui->imageLabel->setAttribute(Qt::WA_Hover, true);
 
+            QString imageSizeText("%1x%2");
+            imageSizeLabel.setText(imageSizeText.arg(newImageSize.width()).arg(newImageSize.height()));
+
             connect(ui->imageLabel,&ImageDisplay::mouseMoved,this , [this](const QPoint& mousePos) {
                 QString text("x=%1;y=%2");
                 positionLabel.setText(text.arg(mousePos.x()).arg(mousePos.y()));
@@ -67,6 +71,7 @@ void MainWindow::setupToolBar()
 void MainWindow::setupStatusBar()
 {
     ui->statusbar->addPermanentWidget(&positionLabel);
+    ui->statusbar->addPermanentWidget(&imageSizeLabel);
 }
 
 MainWindow::~MainWindow()

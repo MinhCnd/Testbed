@@ -31,4 +31,5 @@ private:
     void setupStatusBar();
 
     QLabel positionLabel;
+    QLabel imageSizeLabel;
 };
