@@ -10,5 +10,5 @@ _ Saving & loading setting files
 _ Re-process button
 _ Simple OpenCV processing functions( Absolute thresholding, Adaptive thresholding, Edge detection with Sobel, Line Hough, ....)
 
-![alt text](https://github.com/MinhCnd/Testbed/blob/main/readMeImg.png)
+
 
