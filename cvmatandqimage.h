@@ -29,7 +29,7 @@
 #include <QtGui/qimage.h>
 #include <opencv2/core/core.hpp>
 
-namespace QtOcv {
+namespace ImageConversion {
 
 enum MatColorOrder {
     MCO_BGR,

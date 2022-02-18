@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-
+#include "cvmatandqimage.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -42,8 +42,7 @@ void MainWindow::setupToolBar()
         if(!fileName.isEmpty()) {
             cv::Mat img = cv::imread(fileName.toLocal8Bit().constData());
 
-
-            QImage imageDisplay((const unsigned char*)(img.data),img.cols,img.rows,QImage::Format_RGB888);
+            QImage imageDisplay = ImageConversion::mat2Image(img);
 
             QSize newImageSize = imageDisplay.size();
             ui->imageLabel->resize(newImageSize);

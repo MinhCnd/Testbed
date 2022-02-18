@@ -31,7 +31,7 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
-namespace QtOcv {
+namespace ImageConversion {
 namespace {
 
 /*ARGB <==> BGRA
@@ -415,4 +415,4 @@ QImage mat2Image_shared(const cv::Mat &mat, QImage::Format formatHint)
     return img;
 }
 
-} //namespace QtOcv
+} //namespace ImageConversion
