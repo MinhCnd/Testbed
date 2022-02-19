@@ -1,8 +1,10 @@
 #include <iostream>
+
 #include <QStyle>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
@@ -40,9 +42,9 @@ void MainWindow::setupToolBar()
     connect(loadButton, &QAction::triggered, this, [this]() {
         QString fileName = QFileDialog::getOpenFileName(this, "Image to be processed", QString(), "Image Files (*.png *.jpg *.bmp)");
         if(!fileName.isEmpty()) {
-            cv::Mat img = cv::imread(fileName.toLocal8Bit().constData());
-
-            QImage imageDisplay = ImageConversion::mat2Image(img);
+            xImage.reset(new cv::Mat(cv::imread(fileName.toLocal8Bit().constData())));
+            cv::Mat image = *xImage.get();
+            QImage imageDisplay = ImageConversion::mat2Image(image);
 
             QSize newImageSize = imageDisplay.size();
             ui->imageLabel->resize(newImageSize);
@@ -63,6 +65,15 @@ void MainWindow::setupToolBar()
             newMaxWindowSize.setWidth(newMaxWindowSize.width() + QStyle::PM_ScrollBarExtent);
             newMaxWindowSize.setHeight(newMaxWindowSize.height() + ui->toolBar->height() + ui->statusbar->height() + QStyle::PM_ScrollBarExtent);
             setMaximumSize(newMaxWindowSize);
+        }
+    });
+
+    connect(saveButton, &QAction::triggered, this, [this]() {
+        if(xImage){
+            auto saveFileName = QFileDialog::getSaveFileName(this,"Saving image", QString(), "Image Files (*.png *.jpg *.bmp)");
+            if(saveFileName.size() != 0) {
+                cv::imwrite(cv::String(saveFileName.toStdString()), *xImage.get());
+            }
         }
     });
 }
